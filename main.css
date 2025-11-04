@@ -58,6 +58,8 @@ h1 { font-size: 1.8em;  line-height: 1.15; letter-spacing: 0.06em; } */
 /* TODO: neutralize once you start working on spacing */
 * { margin: 0; padding: 0; }
 
+
+/* nav bar styling */
 header {
     background-color: var(--foreground);
     display: flex;
@@ -67,7 +69,6 @@ header {
     padding: 0.75rem 1rem;
     flex-wrap: wrap;
 }
-
 .brand {
   display: flex;
   flex-direction: column;
@@ -84,7 +85,6 @@ header {
   margin: 0.2em 0 0;
   opacity: 0.85;
 }
-
 nav { 
     margin-left: auto;
 }
@@ -105,6 +105,53 @@ nav a {
 nav a[aria-current="page"] {
   border-color: currentColor;
 }
+
+/* welcome block styling */
+section[aria-label="Welcome title"] {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-block-start: 2.5rem;
+
+  /* center the block and set width */
+  margin-inline: auto;
+  max-width: 50ch;                /* matches future cards’ width */
+  text-align: center;
+
+  /* inverse colors */
+  background-color: var(--foreground);
+  border: 3px solid var(--primary-text, rebeccapurple);
+  padding: 2rem 1.5rem;
+}
+/* headline */
+section[aria-label="Welcome title"] h1 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+}
+/* buttons */
+section[aria-label="Welcome title"] a[role="button"] {
+  display: inline-block;
+  margin: 0.5rem 0.25rem;
+  padding: 0.5rem 1rem;
+  border: 2px solid var(--primary-text);
+  background: transparent;
+  color: var(--button-text);
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: background 0.2s ease;
+}
+section[aria-label="Welcome title"] p:last-of-type {
+  margin-top: 1.25rem;   /* space below the intro paragraph */
+}
+section[aria-label="Welcome title"] a[role="button"]:hover,
+section[aria-label="Welcome title"] a[role="button"]:focus {
+  background: var(--primary-text);
+  color: CanvasText;
+}
+
 
 
 h1, h2, h3, a[role='button'], small { text-transform: uppercase; }
