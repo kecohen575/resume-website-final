@@ -72,6 +72,13 @@ header {
     padding: 0.75rem 1rem;
     flex-wrap: wrap;
     transition: background-color var(--theme-transition-duration) ease;
+
+    /* sticky positioning with transparency */
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(8px);
+    background-color: color-mix(in srgb, var(--foreground) 90%, transparent);
 }
 .brand {
   display: flex;
