@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Contact Form</title>
+    </head>
+    <body>
+        <h1>Contact Form</h1>
+
+        <form action="https://httpbin.org/post" method="post">
+            <fieldset>
+                <legend>Your Details</legend>
+
+                <label for="name">Name:</label>
+                <input id="name" name="name" type="text" placeholder="John Smith" required autofocus>
+
+                <label for="email">Email:</label> <!-- Why isnt email autocompleting? -->
+                <input id="email" name="email" type="email" placeholder="jsmith@example.com" autocomplete="email" required>
+            </fieldset>
+            <fieldset>
+                <legend>Message</legend>
+
+                <label for="subject">Subject:</label>
+                <input id="subject" name="subject" placeholder="What's this about?" type="text">
+
+                <label for="comments">Your Comments:</label>
+                <textarea id="comments" name="comments" rows="5" placeholder="Tell us your thoughts!" required></textarea>
+                <!-- TODO: Textarea font should be same font as rest of text -->
+            </fieldset>
+
+            <input name="possible_bot" value="true" type="hidden">
+
+            <output id="error-message">Error Message if any</output>
+            <output id="info-message">Info Message if any</output>
+
+            <input type="submit" value="Send Message">
+        </form>
+    </body>
+</html>
