@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Contact Form</title>
+        <style>
+            * { box-sizing: border-box; }
+            
+            body {
+                font-family: sans-serif;
+                margin: 0;
+                padding: 0;
+            }
+
+            h1 {
+                text-align: center;
+                margin-top: 1rem;
+            }
+
+            form {
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+                max-width: 600px;
+                margin: 0 auto;
+                padding: 1rem;
+                border: 1px solid #ccc;
+                border-radius: 0.5rem;
+            }
+
+            fieldset {
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+                border: none;
+                padding: 0;
+                margin: 0;
+            }
+
+            legend {
+                font-weight: bold;
+                font-size: 1.2rem;
+                margin-bottom: 0.5rem;
+            }
+
+            label {
+                display: block;
+            }
+
+            .optional-indicator {
+                font-size: 0.9rem;
+                font-style: italic;
+                color: #555;
+            }
+
+            input, textarea { /* I don't want the last one to have a margin bottom...? */
+                font-family: sans-serif;
+                width: 100%;
+                padding: 0.5rem;
+                margin-bottom: 0.5rem;
+                border: 1px solid #ccc;
+                border-radius: 0.25rem;
+            }
+
+            input:focus,
+            textarea:focus {
+                outline: 2px solid #2563eb;
+                outline-offset: 2px;
+            }
+
+            input:user-invalid, textarea:user-invalid {
+                border-color: #dc2626;
+            }
+
+            input:required:valid, textarea:required:valid { /* Should this turn green as soon as valid, or after clicking away? */
+                border-color: green;
+            }
+
+            input:optional:not(:placeholder-shown):valid,
+            textarea:optional:not(:placeholder-shown):valid {
+                border-color: green;
+            }
+
+            output[id="error-message"],
+            output[id="info-message"] {
+                display: block;
+                min-height: 1.2em;
+                margin-top: 0rem;
+                font-size: 0.9rem;
+            }
+
+            /* form:has(input:user-invalid, textarea:user-invalid) #error-message::before {
+                content: "Please fix the highlighted fields before submitting.";
+            } */
+
+            /* form:has(input:user-invalid, textarea:user-invalid) #info-message::before {
+                content: "Please review the highlighted fields.";
+            } */
+
+            output[id="error-message"] {
+                color: #dc2626;
+                font-weight: bold;
+            }
+
+            output[id="info-message"] {
+                color: green;
+            }
+
+            input[type="submit"] {
+                align-self: flex-start;
+                background-color: #007bff;
+                color: #fff;
+                padding: 0.5rem 1rem;
+                border: none;
+                border-radius: 0.25rem;
+                cursor: pointer;
+            }
+
+            input[type="submit"]:hover {
+                background-color: #0056b3;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Contact Form</h1>
+
+        <form action="https://httpbin.org/post" method="post"> <!-- Do I need to set autocomplete="on" at the form level?-->
+            <fieldset>
+                <legend>Your Details</legend>
+
+                <label for="name">Name:</label>
+                <input id="name" name="name" type="text" placeholder="John Smith" autocomplete="name" required autofocus
+                minlength="2" maxlength="50" pattern="[A-ZÀ-ÖØ-öø-ÿ][A-Za-zÀ-ÖØ-öø-ÿ '\-]{1,49}"
+                title="Name must start with an uppercase letter and may include letters, spaces, hyphens, and apostrophes (2-50 characters)." aria-describedby="error-message info-message"> <!-- Should I be using aria-describedby here? Is title accessible? -->
+
+                <label for="email">Email:</label>
+                <input id="email" name="email" type="email" placeholder="jsmith@example.com" autocomplete="email" required
+                minlength="5" maxlength="100" title="Please enter a valid email address." aria-describedby="error-message info-message">
+            </fieldset>
+            <fieldset>
+                <legend>Message</legend>
+
+                <label for="subject">Subject: <span class="optional-indicator">(optional)</span></label> <!-- better to insert content with CSS? -->
+                <input id="subject" name="subject" placeholder="What's this about?" type="text"
+                minlength="2" maxlength="100" pattern="[A-Za-zÀ-ÖØ-öø-ÿ0-9 .,!?'\-]{2,100}"
+                title="Subject may include letters, numbers, spaces, and basic punctuation." aria-describedby="error-message info-message">
+
+                <label for="comments">Your Comments:</label>
+                <textarea id="comments" name="comments" rows="5" placeholder="Tell us your thoughts!" required
+                minlength="2" maxlength="1000" aria-describedby="error-message info-message"></textarea>
+            </fieldset>
+
+            <input name="possible_bot" value="true" type="hidden">
+
+            <!-- <output id="error-message">Too many characters</output>
+            <output id="info-message">Please use letters or numbers</output> -->
+            <output id="error-message"></output>
+            <output id="info-message"></output>
+
+            <input type="submit" value="Send Message">
+        </form>
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const form = document.querySelector('form');
+                const nameInput = document.getElementById('name');
+                const emailInput = document.getElementById('email');
+                const subjectInput = document.getElementById('subject');
+                const commentsInput = document.getElementById('comments');
+
+                const errorOutput = document.getElementById('error-message');
+                const infoOutput = document.getElementById('info-message');
+
+                // Track which fields have been touched by the user
+                const touched = {};
+
+                // Shows the first field's error in form order (only for touched fields)
+                function updateErrorDisplay() {
+                    const fields = [ // Is this a good place to use FormData? Seems hardcoded
+                        { key: 'name', input: nameInput },
+                        { key: 'email', input: emailInput },
+                        { key: 'subject', input: subjectInput },
+                        { key: 'comments', input: commentsInput }
+                    ];
+
+                    for (const field of fields) {
+                        if (touched[field.key] && field.input.validationMessage) {
+                            errorOutput.textContent = field.input.validationMessage;
+                            return;
+                        }
+                    }
+
+                    errorOutput.textContent = '';
+                }
+
+                nameInput.addEventListener('input', (event) => {
+                    touched.name = true;
+                    const v = nameInput.validity;
+                    let message = '';
+
+                    if (v.valueMissing) {
+                        message = 'Name is required.';
+                    } else if (v.tooShort) {
+                        message = `Name must be at least ${nameInput.minLength} characters.`;
+                    } else if (v.tooLong) {
+                        message = `Name must be ${nameInput.maxLength} characters or less.`;
+                    } else if (v.patternMismatch) {
+                        const value = nameInput.value;
+                        if (value && !/^[A-ZÀ-ÖØ-öø-ÿ]/.test(value)) {
+                            message = 'Name must start with an uppercase letter.';
+                        } else {
+                            message = 'Name may only include letters, spaces, hyphens, and apostrophes.';
+                        }
+                    }
+
+                    if (message) {
+                        nameInput.setCustomValidity(message);
+                    } else {
+                        nameInput.setCustomValidity('');
+                    }
+                    nameInput.reportValidity();
+                    updateErrorDisplay();
+                });
+
+                emailInput.addEventListener('input', () => {
+                    touched.email = true;
+                    const v = emailInput.validity;
+                    let message = '';
+
+                    if (v.valueMissing) {
+                        message = 'Email is required.';
+                    } else if (v.typeMismatch) {
+                        message = 'Please enter a valid email address like name@example.com.';
+                    } else if (v.tooShort) {
+                        message = `Email must be at least ${emailInput.minLength} characters.`;
+                    } else if (v.tooLong) {
+                        message = `Email must be ${emailInput.maxLength} characters or less.`;
+                    }
+
+                    if (message) {
+                        emailInput.setCustomValidity(message);
+                    } else {
+                        emailInput.setCustomValidity('');
+                    }
+
+                    emailInput.reportValidity();
+                    updateErrorDisplay();
+                });
+
+                subjectInput.addEventListener('input', () => {
+                    touched.subject = true;
+                    const value = subjectInput.value;
+                    let message = '';
+
+                    // Subject is optional: only validate if user typed something
+                    if (value !== '') {
+                        const v = subjectInput.validity;
+
+                        if (v.tooShort) {
+                            message = `Subject must be at least ${subjectInput.minLength} characters.`;
+                        } else if (v.tooLong) {
+                            message = `Subject must be ${subjectInput.maxLength} characters or less.`;
+                        } else if (v.patternMismatch) {
+                            message = 'Subject may include only letters, numbers, spaces, and basic punctuation.';
+                        }
+                    }
+
+                    if (message) {
+                        subjectInput.setCustomValidity(message);
+                    } else {
+                        subjectInput.setCustomValidity('');
+                    }
+
+                    subjectInput.reportValidity();
+                    updateErrorDisplay();
+                });
+
+                commentsInput.addEventListener('input', () => {
+                    touched.comments = true;
+                    const v = commentsInput.validity;
+                    let message = '';
+
+                    if (v.valueMissing) {
+                        message = 'Comments are required.';
+                    } else if (v.tooShort) {
+                        message = `Comments must be at least ${commentsInput.minLength} characters.`;
+                    } else if (v.tooLong) {
+                        message = `Comments must be ${commentsInput.maxLength} characters or less.`;
+                    }
+
+                    if (message) {
+                        commentsInput.setCustomValidity(message);
+                    } else {
+                        commentsInput.setCustomValidity('');
+                    }
+
+                    commentsInput.reportValidity();
+                    updateErrorDisplay();
+                });
+            });
+        </script>
+    </body>
+</html>
