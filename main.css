@@ -1,6 +1,5 @@
 :root {
     /* color palette */
-    color-scheme: light dark;
     --background: light-dark(#f1eee4f2, rgb(16, 16, 24));
     --foreground: light-dark(white, #171726);
     --primary-text: light-dark(#7547d1, #c34cff);
@@ -11,8 +10,22 @@
     --theme-transition-duration: 0.3s;
 }
 
-:root:has(input[name="color-scheme"]:checked) {
-    color-scheme: light;
+@media (prefers-color-scheme: light) {
+    :root {
+        color-scheme: light;
+    }
+    :root:has(input[name="color-scheme"]:checked) {
+        color-scheme: dark;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        color-scheme: dark;
+    }
+    :root:has(input[name="color-scheme"]:checked) {
+        color-scheme: light;
+    }
 }
 
 /* where should this go? */
@@ -152,24 +165,41 @@ nav a[aria-current="page"] {
   height: 1.25rem;
   background-color: var(--primary-text);
   transition: transform 0.3s ease, background-color 0.3s ease;
-  /* moon icon for dark mode */
-  &::before {
+}
+
+@media (prefers-color-scheme: dark) {
+  /* Unchecked = dark mode displayed, show moon (currently dark) */
+  .toggle-thumb::before {
     content: '☾';
     font-size: 0.75rem;
     color: var(--foreground);
   }
-}
-/* checked state - light mode */
-.theme-toggle input:checked ~ .toggle-track {
-  background-color: var(--foreground);
-}
-.theme-toggle input:checked ~ .toggle-track .toggle-thumb {
-  transform: translateX(1.75rem);
-  /* sun icon for light mode */
-  &::before {
+  /* Checked = light mode displayed, show sun (currently light) */
+  .theme-toggle input:checked ~ .toggle-track .toggle-thumb {
+    transform: translateX(1.75rem);
+  }
+  .theme-toggle input:checked ~ .toggle-track .toggle-thumb::before {
     content: '☀';
   }
 }
+
+/* Inverted toggle appearance for light mode preference systems */
+@media (prefers-color-scheme: light) {
+  /* Unchecked = light mode displayed, show sun (currently light) */
+  .toggle-thumb::before {
+    content: '☀';
+    font-size: 0.75rem;
+    color: var(--foreground);
+  }
+  /* Checked = dark mode displayed, show moon (currently dark) */
+  .theme-toggle input:checked ~ .toggle-track .toggle-thumb {
+    transform: translateX(1.75rem);
+  }
+  .theme-toggle input:checked ~ .toggle-track .toggle-thumb::before {
+    content: '☾';
+  }
+}
+
 /* hover state */
 .theme-toggle:hover .toggle-track {
   border-color: var(--secondary-text);
