@@ -90,14 +90,6 @@
                 font-size: 0.9rem;
             }
 
-            /* form:has(input:user-invalid, textarea:user-invalid) #error-message::before {
-                content: "Please fix the highlighted fields before submitting.";
-            } */
-
-            /* form:has(input:user-invalid, textarea:user-invalid) #info-message::before {
-                content: "Please review the highlighted fields.";
-            } */
-
             output[id="error-message"] {
                 color: #dc2626;
                 font-weight: bold;
@@ -119,6 +111,25 @@
 
             input[type="submit"]:hover {
                 background-color: #0056b3;
+            }
+
+            .flash-error {
+                animation: flash 0.75s ease-out;
+            }
+
+            @keyframes flash {
+                from { background-color: #fee2e2; }
+                to   { background-color: #ffffff; }
+            }
+
+            .fade-out {
+                animation: fadeOut 1.5s ease-out forwards;
+            }
+
+            @keyframes fadeOut {
+                0%   { opacity: 1; }
+                70%  { opacity: 1; }
+                100% { opacity: 0; }
             }
         </style>
     </head>
@@ -192,6 +203,45 @@
 
                     errorOutput.textContent = '';
                 }
+
+                // Show temporary error message with fade-out effect
+                function showTemporaryError(message, inputElement) {
+                    inputElement.classList.remove('flash-error');
+                    void inputElement.offsetWidth; // Force reflow to restart animation? Not sure if good or needed
+                    inputElement.classList.add('flash-error');
+
+                    errorOutput.textContent = message;
+                    errorOutput.classList.remove('fade-out');
+                    void errorOutput.offsetWidth; // Same as before
+                    errorOutput.classList.add('fade-out');
+
+                    // After animation completes, restore the validation error display
+                    setTimeout(() => {
+                        if (errorOutput.textContent === message) {
+                            errorOutput.classList.remove('fade-out');
+                            updateErrorDisplay();
+                        }
+                    }, 1500);
+                }
+
+                // Mask input based on allowed pattern
+                function maskInput(inputElement, allowedPattern, fieldName) {
+                    inputElement.addEventListener('beforeinput', (event) => {
+                        // Only check character input (not delete, paste, etc.)
+                        if (event.inputType === 'insertText' && event.data) {
+                            const char = event.data;
+
+                            if (!allowedPattern.test(char)) {
+                                event.preventDefault();
+                                showTemporaryError(`Invalid character "${char}" - not allowed in ${fieldName}.`, inputElement);
+                            }
+                        }
+                    });
+                }
+
+                // Set up input masking for fields with patterns
+                maskInput(nameInput, /[A-Za-zÀ-ÖØ-öø-ÿ '\-]/, 'Name');
+                maskInput(subjectInput, /[A-Za-zÀ-ÖØ-öø-ÿ0-9 .,!?'\-]/, 'Subject');
 
                 nameInput.addEventListener('input', (event) => {
                     touched.name = true;
