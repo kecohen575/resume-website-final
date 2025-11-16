@@ -39,3 +39,10 @@ PART 2: CSS
   - maybe i make it toggle-able
 - im noticing some page jankiness coming from the images loading in...
 - also some flash of unstyled text, how to address?
+
+
+
+PART 3: JS
+
+- seeing a flash of light theme when device is set to dark mode
+- tooltip is still styled by browser default, looks weird

@@ -210,6 +210,15 @@ nav a[aria-current="page"] {
   outline-offset: 2px;
 }
 
+.no-js-warning {
+  margin: 1rem auto;
+  padding: 0.75rem 1rem;
+  border: 1px solid currentColor;
+  max-width: 65ch;
+  text-align: center;
+  background-color: color-mix(in srgb, var(--foreground) 70%, transparent);
+}
+
 /* welcome block styling */
 section[aria-label="Welcome title"] {
   display: flex;
