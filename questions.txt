@@ -55,3 +55,4 @@ PART 3: JS
 FINAL TOUCHES:
 - remove line from under nav bar on other pages
 - make skill tree tabs actually functional
+- no js fallback for project cards
