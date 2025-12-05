@@ -49,3 +49,9 @@ PART 3: JS
 
 - seeing a flash of light theme when device is set to dark mode
 - tooltip is still styled by browser default, looks weird
+
+
+
+FINAL TOUCHES:
+- remove line from under nav bar on other pages
+- make skill tree tabs actually functional

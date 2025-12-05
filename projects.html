@@ -52,86 +52,9 @@
                 <h1>Level Select</h1>
                 <p>Choose a project to explore</p>
             </hgroup>
-            <section aria-label="Projects"> <!-- my issue is that this is the "h2" but i dont actually want a title so it seems like im skipping to h3 -->
-                <ul>
-                    <li> <!-- Maybe each li should be wrapped in <a> so that the whole card is clickable and links to demo -->
-                        <article>
-                            <p>
-                                <data value="Complete">Complete</data> | 
-                                <span aria-hidden="true">&star;</span>
-                                <data value="234">234</data>
-                            </p>
-                            <h3>2048 AI Player</h3>
-                            <p>A short description of this project...</p>
-                            <ul> <!-- is <code> suitable here? Not actual code, but tech related... -->
-                                <li><code>Python</code></li>
-                                <li><code>Algorithms</code></li>
-                            </ul>
-                            <p>
-                                <a href="">Demo</a>
-                                <a href="">Code</a>
-                            </p>
-                        </article>
-                    </li>
-                    <li>
-                        <article>
-                            <p>
-                                <data value="Complete">Complete</data> | 
-                                <span aria-hidden="true">&star;</span>
-                                <data value="189">189</data>
-                            </p>
-                            <h3>TeleSlack Bot</h3>
-                            <p>A short description of this project...</p>
-                            <ul>
-                                <li><code>Ruby on Rails</code></li>
-                                <li><code>Slack API</code></li>
-                                <li><code>Telegram API</code></li>
-                            </ul>
-                            <p>
-                                <a href="">Demo</a>
-                                <a href="">Code</a>
-                            </p>
-                        </article>
-                    </li>
-                    <li>
-                        <article>
-                            <p>
-                                <data value="In Progress">In Progress</data> | 
-                                <span aria-hidden="true">&star;</span>
-                                <data value="0">0</data>
-                            </p>
-                            <h3>You Are What You See</h3>
-                            <p>A short description of this video game...</p>
-                            <ul>
-                                <li><code>Unity</code></li>
-                                <li><code>C&num;</code></li>
-                            </ul>
-                            <p>
-                                <a href="">Demo</a>
-                                <a href="">Code</a>
-                            </p>
-                        </article>
-                    </li>
-                    <li>
-                        <article>
-                            <p>
-                                <data value="Complete">Complete</data> | 
-                                <span aria-hidden="true">&star;</span>
-                                <data value="312">312</data>
-                            </p>
-                            <h3>Monte Carlo BlackJack Player</h3>
-                            <p>A short description of this project...</p>
-                            <ul>
-                                <li><code>Python</code></li>
-                                <li><code>Algorithms</code></li>
-                            </ul>
-                            <p>
-                                <a href="">Demo</a>
-                                <a href="">Code</a>
-                            </p>
-                        </article>
-                    </li>
-                </ul>
+            <section aria-label="Projects">
+                <p class="section-intro">Project cards are rendered with a custom element so the layout stays consistent across this portfolio.</p>
+                <ul class="projects-grid" id="projects-grid"></ul>
             </section>
             <aside>More levels coming soon...</aside>
         </main>
@@ -150,9 +73,7 @@
         </footer>
         <script src="assets/view-transitions.js" defer></script>
         <script src="assets/theme-toggle.js" defer></script>
-        <script>
-            // i will add script here after writing body
-        </script>
+        <script type="module" src="assets/projects.js" defer></script>
         <noscript>
             <p class="no-js-warning">Theme preference will not be saved without JavaScript. Toggle works per visit only.</p>
         </noscript>
