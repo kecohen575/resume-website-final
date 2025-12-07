@@ -56,3 +56,10 @@ FINAL TOUCHES:
 - remove line from under nav bar on other pages
 - make skill tree tabs actually functional
 - no js fallback for project cards
+- use service workers for better offline use
+  - for purpose of resume site, could be smart to pull in everything at the beginning
+    - slower initial load, but its small anyways and rest of site will be very fast after
+- project images could have light mode counterparts
+- buttons, when clicked, need to be clicked out of to lose clicked animation
+- yellow stars should not be yellow in light mode, bad contrast
+  - same issue with education/experience card titles
