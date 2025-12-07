@@ -124,3 +124,12 @@
   margin-top: 1rem;
 }
 
+.crud-section #form-confirmation {
+  display: block;
+  margin-top: 1rem;
+  padding: 0.5rem;
+  color: #22c55e;
+  font-weight: bold;
+  text-align: center;
+  min-height: 1.5em;
+}

@@ -63,3 +63,5 @@ FINAL TOUCHES:
 - buttons, when clicked, need to be clicked out of to lose clicked animation
 - yellow stars should not be yellow in light mode, bad contrast
   - same issue with education/experience card titles
+- add View Levels button to bottom of About page
+- add status message, or at the very least submit confirmation, to the BOTTOM of project crud form

@@ -9,6 +9,7 @@ const deleteBtn = document.getElementById('delete-btn');
 const submitBtn = document.getElementById('submit-btn');
 const statusEl = document.getElementById('crud-status');
 const formLegend = document.getElementById('form-legend');
+const confirmationEl = document.getElementById('form-confirmation');
 
 let currentIndex = -1; // -1 = new project, 0+ = editing existing
 
@@ -28,6 +29,13 @@ const saveProjects = (projects) => {
 
 const setStatus = (message) => {
   if (statusEl) statusEl.textContent = message;
+};
+
+const showConfirmation = (message) => {
+  if (confirmationEl) {
+    confirmationEl.textContent = message;
+    setTimeout(() => { confirmationEl.textContent = ''; }, 3000);
+  }
 };
 
 // ─── Populate Select ───────────────────────────────────────────────────────
@@ -95,6 +103,7 @@ const createProject = (data) => {
   projects.push(data);
   saveProjects(projects);
   setStatus(`Created "${data.title}". Changes visible on next project load.`);
+  showConfirmation('✓ Project created');
 };
 
 const updateProject = (index, data) => {
@@ -103,6 +112,7 @@ const updateProject = (index, data) => {
     projects[index] = data;
     saveProjects(projects);
     setStatus(`Updated "${data.title}". Changes visible on next project load.`);
+    showConfirmation('✓ Project updated');
   }
 };
 
@@ -112,6 +122,7 @@ const deleteProject = (index) => {
     const removed = projects.splice(index, 1)[0];
     saveProjects(projects);
     setStatus(`Deleted "${removed.title}". Changes visible on next project load.`);
+    showConfirmation('✓ Project deleted');
     clearForm();
     populateSelect();
   }
