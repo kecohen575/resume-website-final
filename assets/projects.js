@@ -26,8 +26,24 @@ const slugify = (text = '') =>
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/(^-|-$)+/g, '');
 
+// Check if a string is a URL (starts with http://, https://, or //)
+const isUrl = (str) => /^(https?:)?\/\//i.test(str);
+
+// Build cover object from URL or slug
+const buildCover = (coverValue, fallbackSlug) => {
+  if (coverValue && isUrl(coverValue)) {
+    // Direct URL - use as-is for both sources and fallback
+    return {
+      sources: [],
+      fallback: coverValue
+    };
+  }
+  // Slug-based cover from local assets
+  return coverFromSlug(coverValue || fallbackSlug);
+};
+
 const normalizeProject = (project = {}) => {
-  const slug = project.slug || project.cover || slugify(project.title || 'untitled');
+  const slug = project.slug || slugify(project.title || 'untitled');
   return {
     title: project.title || 'Untitled Project',
     description: project.description || 'No description provided.',
@@ -40,7 +56,7 @@ const normalizeProject = (project = {}) => {
     timeline: project.timeline || '',
     role: project.role || '',
     slug,
-    cover: coverFromSlug(slug)
+    cover: buildCover(project.cover, slug)
   };
 };
 
@@ -127,5 +143,8 @@ const loadRemoteProjects = async () => {
 if (loadLocalBtn) loadLocalBtn.addEventListener('click', loadLocalProjects);
 if (loadRemoteBtn) loadRemoteBtn.addEventListener('click', loadRemoteProjects);
 
-// Seed localStorage the first time without rendering so "Load Local" works offline.
-seedLocalFromJson();
+// Seed localStorage ONLY if empty, so "Load Local" works offline
+// but doesn't overwrite user-created projects.
+if (!localStorage.getItem(LOCAL_STORAGE_KEY)) {
+  seedLocalFromJson();
+}

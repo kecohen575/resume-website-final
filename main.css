@@ -489,7 +489,8 @@ section[aria-label="Projects"] .section-intro {
   padding: 0;
 }
 
-.projects-actions button {
+.projects-actions button,
+.projects-actions a[role="button"] {
   padding: 0.55rem 1rem;
   border: 2px solid var(--primary-text);
   background: transparent;
@@ -498,11 +499,14 @@ section[aria-label="Projects"] .section-intro {
   letter-spacing: 0.05em;
   font-family: 'PixelFont', monospace;
   cursor: pointer;
+  text-decoration: none;
   transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.1s ease;
 }
 
 .projects-actions button:hover,
-.projects-actions button:focus {
+.projects-actions button:focus,
+.projects-actions a[role="button"]:hover,
+.projects-actions a[role="button"]:focus {
   background-color: var(--primary-text);
   color: CanvasText;
   border-color: var(--secondary-text);

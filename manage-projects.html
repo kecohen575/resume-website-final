@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="view-transition" content="same-origin">
+        <meta name="description" content="Manage project data in localStorage - Create, Update, Delete">
+        <title>Manage Projects | Kevin's Resume Site</title>
+        <link rel="icon" href="assets/cv-favicon-16.png" sizes="16x16" type="image/png">
+        <link rel="icon" href="assets/cv-favicon-32.png" sizes="32x32" type="image/png">
+        <style>
+            header, main, footer { border: 2px solid black; }
+        </style>
+        <link rel="stylesheet" href="main.css">
+        <link rel="stylesheet" href="assets/forms.css">
+    </head>
+    <body>
+        <header>
+            <hgroup class="brand">
+                <h2>Kevin Cohen</h2>
+                <p>&gt; Player One</p>
+            </hgroup>
+
+            <nav>
+                <ul>
+                    <li><a href="/index.html">HOME</a></li>
+                    <li><a href="/resume.html">ABOUT</a></li>
+                    <li><a href="/projects.html">PROJECTS</a></li>
+                    <li><a href="/blog.html">BLOG</a></li>
+                </ul>
+            </nav>
+
+            <label class="theme-toggle" aria-label="Toggle between light and dark theme">
+                <input type="checkbox" name="color-scheme" aria-label="Dark mode toggle">
+                <span class="toggle-track">
+                    <span class="toggle-thumb"></span>
+                </span>
+            </label>
+        </header>
+        <main>
+            <hgroup>
+                <h1>Project Manager</h1>
+                <p>Create, Update, and Delete project data</p>
+            </hgroup>
+            <section aria-label="CRUD Operations" class="crud-section">
+                <p id="crud-status" role="status" aria-live="polite">Select a project to edit/delete or create a new one.</p>
+
+                <!-- Project selector for Update/Delete -->
+                <fieldset class="project-selector">
+                    <legend>Select Project</legend>
+                    <select id="project-select" aria-label="Select a project to edit">
+                        <option value="">-- New Project --</option>
+                    </select>
+                    <button type="button" id="delete-btn" class="danger-btn" disabled>Delete Selected</button>
+                </fieldset>
+
+                <!-- Project Form -->
+                <form id="project-form">
+                    <fieldset>
+                        <legend id="form-legend">Create New Project</legend>
+                        
+                        <label for="title">Title <span aria-hidden="true">*</span></label>
+                        <input type="text" id="title" name="title" required>
+
+                        <label for="description">Description <span aria-hidden="true">*</span></label>
+                        <textarea id="description" name="description" rows="3" required></textarea>
+
+                        <label for="status">Status</label>
+                        <select id="status" name="status">
+                            <option value="In Progress">In Progress</option>
+                            <option value="Complete">Complete</option>
+                            <option value="Planned">Planned</option>
+                        </select>
+
+                        <label for="stars">Stars</label>
+                        <input type="number" id="stars" name="stars" min="0" value="0">
+
+                        <label for="tags">Tags (comma-separated)</label>
+                        <input type="text" id="tags" name="tags" placeholder="Python, AI, Web">
+
+                        <label for="cover">Cover Image (slug or URL)</label>
+                        <input type="text" id="cover" name="cover" placeholder="project-slug or https://...">
+
+                        <label for="alt">Image Alt Text</label>
+                        <input type="text" id="alt" name="alt">
+
+                        <label for="demo">Demo URL</label>
+                        <input type="url" id="demo" name="demo" placeholder="https://...">
+
+                        <label for="code">Code URL</label>
+                        <input type="url" id="code" name="code" placeholder="https://github.com/...">
+
+                        <label for="timeline">Timeline</label>
+                        <input type="text" id="timeline" name="timeline" placeholder="Winter 2024">
+
+                        <label for="role">Role</label>
+                        <input type="text" id="role" name="role" placeholder="Solo Build">
+                    </fieldset>
+
+                    <div class="form-actions">
+                        <button type="submit" id="submit-btn">Create Project</button>
+                        <button type="reset" id="reset-btn">Clear Form</button>
+                    </div>
+                </form>
+            </section>
+            <aside><a href="/projects.html">← Back to Projects</a></aside>
+        </main>
+        <footer>
+            <section aria-labelledby="contact-header">
+                <h2 id="contact-header">Contact</h2>
+                <address>
+                    <ul>
+                        <li><a href="mailto:kevin@cohen26.com">Email</a></li>
+                        <li><a href="https://github.com/kecohen575">GitHub</a></li>
+                        <li><a href="https://www.linkedin.com/in/kecohen26/">LinkedIn</a></li>
+                    </ul>
+                </address>
+                <small>&copy; KEVIN COHEN <br> Press Start to continue</small>
+            </section>
+        </footer>
+        <script src="assets/view-transitions.js" defer></script>
+        <script src="assets/theme-toggle.js" defer></script>
+        <script type="module" src="assets/manage-projects.js" defer></script>
+    </body>
+</html>
+
