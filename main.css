@@ -6,7 +6,8 @@
     --secondary-text: light-dark(#40aabf, #00ffff);
     --tertiary-text: light-dark(green, #66cc66);
     --button-text: light-dark(#263759, #ccffcc);
-    
+    --star-color: light-dark(#b8860b, #ffff00);
+
     --card-surface: color-mix(in srgb, var(--foreground) 82%, transparent);
     --card-border: var(--primary-text);
     --card-gap: 1.25rem;
@@ -99,6 +100,10 @@ h1 { font-size: 1.8em;  line-height: 1.15; letter-spacing: 0.06em; } */
 
 
 /* nav bar styling */
+header, main, footer {
+    border: 2px solid black;
+}
+
 header {
     background-color: var(--foreground);
     display: flex;
@@ -268,7 +273,8 @@ section[aria-label="Welcome title"] h1 {
   text-transform: uppercase;
 }
 /* buttons */
-section[aria-label="Welcome title"] a[role="button"] {
+section[aria-label="Welcome title"] a[role="button"],
+.page-cta a[role="button"] {
   display: inline-block;
   margin: 0.5rem 0.25rem;
   padding: 0.5rem 1rem;
@@ -284,9 +290,16 @@ section[aria-label="Welcome title"] p:last-of-type {
   margin-top: 1.25rem;
 }
 section[aria-label="Welcome title"] a[role="button"]:hover,
-section[aria-label="Welcome title"] a[role="button"]:focus {
+section[aria-label="Welcome title"] a[role="button"]:focus-visible,
+.page-cta a[role="button"]:hover,
+.page-cta a[role="button"]:focus-visible {
   background: var(--primary-text);
   color: CanvasText;
+}
+
+.page-cta {
+  text-align: center;
+  margin: 1rem 0 2rem;
 }
 
 aside[aria-hidden="true"] {
@@ -383,7 +396,7 @@ footer section[aria-labelledby="contact-header"] a {
 }
 
 footer section[aria-labelledby="contact-header"] a:hover,
-footer section[aria-labelledby="contact-header"] a:focus {
+footer section[aria-labelledby="contact-header"] a:focus-visible {
   background: var(--primary-text);
   color: CanvasText;
   transform: translateY(-2px);
@@ -504,9 +517,9 @@ section[aria-label="Projects"] .section-intro {
 }
 
 .projects-actions button:hover,
-.projects-actions button:focus,
+.projects-actions button:focus-visible,
 .projects-actions a[role="button"]:hover,
-.projects-actions a[role="button"]:focus {
+.projects-actions a[role="button"]:focus-visible {
   background-color: var(--primary-text);
   color: CanvasText;
   border-color: var(--secondary-text);
@@ -713,6 +726,10 @@ div[role="tablist"] {
   flex-wrap: wrap;
 }
 
+div[role="tablist"][hidden] {
+  display: none;
+}
+
 /* individual tab buttons */
 button[role="tab"] {
   padding: 0.75rem 1.5rem;
@@ -751,6 +768,10 @@ section[role="tabpanel"] {
   padding: 1.5rem;
   background-color: var(--background);
   border: 2px solid var(--primary-text);
+}
+
+section[role="tabpanel"][hidden] {
+  display: none;
 }
 
 section[role="tabpanel"] > h3 {
@@ -867,7 +888,7 @@ section[aria-labelledby="education-title"] h3 {
   font-size: 1.3em;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: #ffff00;
+  color: var(--star-color);
 }
 
 section[aria-labelledby="education-title"] > article > p {
@@ -969,7 +990,7 @@ section[aria-labelledby="experience-title"] h3 {
   font-size: 1.3em;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: #ffff00;
+  color: var(--star-color);
 }
 
 section[aria-labelledby="experience-title"] article > p:first-of-type {

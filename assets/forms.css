@@ -94,7 +94,7 @@
 }
 
 .crud-section button:hover,
-.crud-section button:focus {
+.crud-section button:focus-visible {
   background-color: var(--primary-text);
   color: CanvasText;
   transform: translateY(-2px);
@@ -112,7 +112,7 @@
 }
 
 .crud-section .danger-btn:hover:not(:disabled),
-.crud-section .danger-btn:focus:not(:disabled) {
+.crud-section .danger-btn:focus-visible:not(:disabled) {
   background-color: #ff4444;
   color: white;
 }

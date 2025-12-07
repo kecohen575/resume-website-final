@@ -15,13 +15,10 @@
         <link rel="icon" href="assets/cv-favicon-16.png" sizes="16x16" type="image/png">
         <link rel="icon" href="assets/cv-favicon-32.png" sizes="32x32" type="image/png">
         <style>
-            header, main, footer {
-                border: 2px solid black;
-            }
             section {
                 border: 1px solid black;
             }
-            
+
             kc-stat-card {
                 display: block;
                 border: 1px solid currentColor;
@@ -53,7 +50,7 @@
                 margin: .25rem 0 0;
                 opacity: .85;
             }
-            
+
         </style>
         <link rel="stylesheet" href="main.css">
     </head>
@@ -69,7 +66,6 @@
                     <li><a href="/index.html">HOME</a></li>
                     <li><a href="/resume.html" aria-current="page">ABOUT</a></li>
                     <li><a href="/projects.html">PROJECTS</a></li>
-                    <li><a href="/blog.html">BLOG</a></li>
                 </ul>
             </nav>
 
@@ -121,7 +117,7 @@
             </section>
             <section aria-labelledby="skill-tree-title">
                 <h2 id="skill-tree-title">Skill Tree</h2>
-                <div role="tablist" aria-label="Skill Categories">
+                <div role="tablist" aria-label="Skill Categories" hidden>
                     <button role="tab" aria-selected="true" aria-controls="languages-panel">
                         Languages
                     </button>
@@ -138,8 +134,11 @@
                         Data Analysis
                     </button> -->
                 </div>
+                <noscript>
+                    <p>Please enable JavaScript to see tablist controls.</p>
+                </noscript>
 
-                <section id="languages-panel" role="tabpanel" aria-labelledby="tab-languages">
+                <section id="languages-panel" role="tabpanel" aria-labelledby="tab-languages" tabindex="0">
                     <h3 id="tab-languages">Languages</h3>
                     <ul>
                         <li>
@@ -150,8 +149,8 @@
                         </li>
                         <li>
                             <span class="skill-name">Java</span>
-                            <div class="skill-bar" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" aria-label="Java skill level: 75%">
-                                <div class="skill-fill" style="width: 75%;"></div>
+                            <div class="skill-bar" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" aria-label="Java skill level: 50%">
+                                <div class="skill-fill" style="width: 50%;"></div>
                             </div>
                         </li>
                         <li>
@@ -169,13 +168,13 @@
                     </ul>
                 </section>
 
-                <section id="webdev-panel" role="tabpanel" aria-labelledby="tab-webdev">
+                <section id="webdev-panel" role="tabpanel" aria-labelledby="tab-webdev" tabindex="0">
                     <h3 id="tab-webdev">Web Dev</h3>
                     <ul>
                         <li>
                             <span class="skill-name">React Native</span>
-                            <div class="skill-bar" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" aria-label="React Native skill level: 75%">
-                                <div class="skill-fill" style="width: 75%;"></div>
+                            <div class="skill-bar" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" aria-label="React Native skill level: 50%">
+                                <div class="skill-fill" style="width: 50%;"></div>
                             </div>
                         </li>
                         <li>
@@ -199,13 +198,13 @@
                     </ul>
                 </section>
 
-                <section id="dev-process-panel" role="tabpanel" aria-labelledby="tab-dev-process">
+                <section id="dev-process-panel" role="tabpanel" aria-labelledby="tab-dev-process" tabindex="0">
                     <h3 id="tab-dev-process">Dev Process</h3>
                     <ul>
                         <li>
                             <span class="skill-name">Git/GitHub</span>
-                            <div class="skill-bar" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" aria-label="Git/GitHub skill level: 75%">
-                                <div class="skill-fill" style="width: 75%;"></div>
+                            <div class="skill-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" aria-label="Git/GitHub skill level: 90%">
+                                <div class="skill-fill" style="width: 90%;"></div>
                             </div>
                         </li>
                         <li>
@@ -314,6 +313,10 @@
                 </section>
 
             </section>
+
+            <p class="page-cta">
+                <a href="/projects.html" role="button">View Levels</a>
+            </p>
         </main>
         <footer>
             <section aria-labelledby="contact-header">
@@ -331,7 +334,25 @@
         <script src="assets/view-transitions.js" defer></script>
         <script src="assets/theme-toggle.js" defer></script>
         <script>
-            // i will add script here after writing body
+            // Show tablist and hide non-active panels (fallback: all panels visible, no buttons)
+            const tablist = document.querySelector('[role="tablist"]');
+            tablist.hidden = false;
+            document.querySelectorAll('[role="tab"]:not([aria-selected="true"])').forEach(tab => {
+                document.getElementById(tab.getAttribute('aria-controls')).hidden = true;
+            });
+
+            tablist.addEventListener('click', (e) => {
+                const tab = e.target.closest('[role="tab"]');
+                if (!tab) return;
+
+                // Update tabs
+                document.querySelectorAll('[role="tab"]').forEach(t => t.setAttribute('aria-selected', 'false'));
+                tab.setAttribute('aria-selected', 'true');
+
+                // Update panels
+                document.querySelectorAll('[role="tabpanel"]').forEach(p => p.hidden = true);
+                document.getElementById(tab.getAttribute('aria-controls')).hidden = false;
+            });
         </script>
         <noscript>
             <p class="no-js-warning">Theme preference will not be saved without JavaScript. Toggle works per visit only.</p>

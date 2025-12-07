@@ -181,7 +181,7 @@ class ProjectCard extends HTMLElement {
         }
 
         footer a:hover,
-        footer a:focus {
+        footer a:focus-visible {
           background-color: var(--primary-text);
           color: CanvasText;
           border-color: var(--secondary-text);

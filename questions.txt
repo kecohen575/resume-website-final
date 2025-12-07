@@ -53,15 +53,14 @@ PART 3: JS
 
 
 FINAL TOUCHES:
-- remove line from under nav bar on other pages
-- make skill tree tabs actually functional
 - no js fallback for project cards
+- no js fallback for skill tree
+- im sure skill tree tabs can even be made in pure html/css
 - use service workers for better offline use
   - for purpose of resume site, could be smart to pull in everything at the beginning
     - slower initial load, but its small anyways and rest of site will be very fast after
 - project images could have light mode counterparts
-- buttons, when clicked, need to be clicked out of to lose clicked animation
-- yellow stars should not be yellow in light mode, bad contrast
-  - same issue with education/experience card titles
-- add View Levels button to bottom of About page
-- add status message, or at the very least submit confirmation, to the BOTTOM of project crud form
+- for mobile devices, nav bar should be hamburger menu?
+- figure out what to do with kc-stat-card and its styles in resume.html
+- "more levels soon..." ellipses could cycle between . .. ...
+- fix buttons across site with inconsistent styling
